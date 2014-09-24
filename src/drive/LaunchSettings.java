@@ -33,7 +33,8 @@ public class LaunchSettings extends UiAutomatorTestCase {
 			getUiDevice().pressBack();
 		}
 
-		Utils.clickAndWaitForNewWindow(ID_DRIV_UPLOAD);
+		assertTrue("Upload button is not here",
+				Utils.clickAndWaitForNewWindow(ID_DRIV_UPLOAD));
 
 		sleep(1000);
 
@@ -52,7 +53,8 @@ public class LaunchSettings extends UiAutomatorTestCase {
 									new UiSelector().className(
 											"android.widget.LinearLayout")
 											.instance(10)));
-			Utils.click(internal_storage);
+			assertTrue("Button Internal storage is not here",
+					Utils.click(internal_storage));
 
 		}
 
@@ -81,7 +83,8 @@ public class LaunchSettings extends UiAutomatorTestCase {
 			}
 
 			if (!found) {
-				Utils.scrollForward(list);
+				assertTrue("Didn't find the requested file...",
+						Utils.scrollForward(list));
 			}
 		}
 
