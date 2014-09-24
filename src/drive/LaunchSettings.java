@@ -18,14 +18,7 @@ public class LaunchSettings extends UiAutomatorTestCase {
 	private static String ID_DRIV_TITLE = "android:id/action_bar_title";
 	private static String LABEL_OPEN_FROM = "Open from";
 	private static String LABEL_MY_DRIVE = "My Drive";
-
-	private void createFile() {
-		String[] commands = {
-				"cd /storage/sdcard0",
-				"dd if=/dev/urandom of=/storage/sdcard0/random_seed bs=1 count=100000",
-				"cat /storage/sdcard0/random_seed /storage/sdcard0/random_seed_orig /storage/sdcard0/random_seed > /storage/sdcard0/random_seed_concat" };
-		Utils.runAsRoot(commands);
-	}
+	private static String SEND_FILE = "random_seed_concat.bin";
 
 	private void updateFile() {
 		// Be more adaptative...
@@ -55,7 +48,6 @@ public class LaunchSettings extends UiAutomatorTestCase {
 											.instance(10)));
 			assertTrue("Button Internal storage is not here",
 					Utils.click(internal_storage));
-
 		}
 
 		sleep(1000);
@@ -64,8 +56,6 @@ public class LaunchSettings extends UiAutomatorTestCase {
 		boolean found = false;
 		UiScrollable list = new UiScrollable(
 				new UiSelector().resourceId(ID_DRIV_LIST));
-		
-		String[] toFind = { "random_seed_concat" };
 
 		while (!found) {
 			List<UiObject> available = Utils.getElems(ID_DRIV_LIST,
@@ -73,12 +63,11 @@ public class LaunchSettings extends UiAutomatorTestCase {
 			assertTrue("Unable to retrieve the list", !available.isEmpty());
 
 			for (UiObject dest : available) {
-				for (String tf : toFind) {
-					if (Utils.hasText(dest, tf)) {
-						assertTrue("Unable to select element",
-								Utils.hasTextAndClick(dest, tf));
-						found = true;
-					}
+				if (Utils.hasText(dest, SEND_FILE)) {
+					assertTrue("Unable to select element",
+							Utils.hasTextAndClick(dest, SEND_FILE));
+					found = true;
+					break;
 				}
 			}
 
@@ -95,7 +84,7 @@ public class LaunchSettings extends UiAutomatorTestCase {
 				Utils.openApp(this, "Drive", "com.google.android.apps.docs"));
 
 		while (true) {
-			createFile();
+			Utils.createFile(SEND_FILE);
 			updateFile();
 			sleep(60000);
 		}
