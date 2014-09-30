@@ -33,8 +33,7 @@ public class LaunchSettings extends UiAutomatorTestCase {
 
 		// A little tricky to select the button...
 		// Not always to have that, verify if needed first
-		UiObject action_title = new UiObject(
-				new UiSelector().resourceId(ID_DRIV_TITLE));
+		UiObject action_title = Utils.getObjectWithId(ID_DRIV_TITLE);
 		
 		if (Utils.hasText(action_title, LABEL_OPEN_FROM)) {
 
@@ -54,8 +53,7 @@ public class LaunchSettings extends UiAutomatorTestCase {
 
 		// Scroll the view until finding our file
 		boolean found = false;
-		UiScrollable list = new UiScrollable(
-				new UiSelector().resourceId(ID_DRIV_LIST));
+		UiScrollable list = Utils.getScrollableWithId(ID_DRIV_LIST);
 
 		while (!found) {
 			List<UiObject> available = Utils.getElems(ID_DRIV_LIST,
