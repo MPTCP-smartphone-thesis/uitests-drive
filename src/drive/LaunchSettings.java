@@ -12,13 +12,15 @@ import com.android.uiautomator.testrunner.UiAutomatorTestCase;
 
 public class LaunchSettings extends UiAutomatorTestCase {
 
-	private static String ID_DRIV_UPLOAD = "com.google.android.apps.docs:id/create_bar_upload";
-	private static String ID_DRIV_LIST = "com.android.documentsui:id/list";
-	private static String ID_DRIV_NAME = "android:id/title";
-	private static String ID_DRIV_TITLE = "android:id/action_bar_title";
-	private static String LABEL_OPEN_FROM = "Open from";
-	private static String LABEL_MY_DRIVE = "My Drive";
-	private static String SEND_FILE = "random_seed_concat.bin";
+	private static final String ID_DRIV_UPLOAD = "com.google.android.apps.docs:id/create_bar_upload";
+	private static final String ID_DRIV_LIST = "com.android.documentsui:id/list";
+	private static final String ID_DRIV_NAME = "android:id/title";
+	private static final String ID_DRIV_TITLE = "android:id/action_bar_title";
+	private static final String LABEL_OPEN_FROM = "Open from";
+	private static final String LABEL_MY_DRIVE = "My Drive";
+	private static final String SEND_FILE = "random_seed_concat.bin";
+
+	private static final int NB_FILES = 1;
 
 	private void updateFile() {
 		// Be more adaptative...
@@ -85,7 +87,7 @@ public class LaunchSettings extends UiAutomatorTestCase {
 		if (iface != null) {
 			Utils.launchTcpdump("drive", iface);
 		}
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < NB_FILES; i++) {
 			Utils.createFile(SEND_FILE);
 			updateFile();
 			sleep(60000);
