@@ -81,13 +81,18 @@ public class LaunchSettings extends UiAutomatorTestCase {
 		assertTrue("OOOOOpps",
 				Utils.openApp(this, "Drive", "com.google.android.apps.docs"));
 
-		Utils.launchTcpdump("drive");
+		String iface = getParams().getString("iface");
+		if (iface != null) {
+			Utils.launchTcpdump("drive", iface);
+		}
 		for (int i = 0; i < 9; i++) {
 			Utils.createFile(SEND_FILE);
 			updateFile();
 			sleep(60000);
 		}
-		Utils.killTcpdump();
+		if (iface != null) {
+			Utils.killTcpdump();
+		}
 
 	}
 
