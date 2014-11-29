@@ -20,7 +20,7 @@ public class LaunchSettings extends UiAutomatorTestCase {
 	private static final String LABEL_MY_DRIVE = "My Drive";
 	private static final String SEND_FILE = "random_seed_concat.bin";
 
-	private static final int NB_FILES = 2;
+	private static final int NB_FILES = 1;
 
 	private void updateFile() {
 		// Be more adaptative...
