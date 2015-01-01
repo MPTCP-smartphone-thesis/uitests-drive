@@ -81,7 +81,9 @@ public class LaunchSettings extends UiAutomatorTestCase {
 
 	public void testDemo() throws UiObjectNotFoundException {
 		assertTrue("OOOOOpps",
-				Utils.openApp(this, "Drive", "com.google.android.apps.docs"));
+				Utils.openApp(this, "Drive",
+						"com.google.android.apps.docs",
+						"com.google.android.apps.docs.app.NewMainProxyActivity"));
 
 		for (int i = 0; i < NB_FILES; i++) {
 			Utils.createFile(SEND_FILE);
