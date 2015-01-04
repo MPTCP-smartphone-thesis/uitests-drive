@@ -18,7 +18,7 @@ public class LaunchSettings extends UiAutomatorTestCase {
 	private static final String ID_DRIV_TITLE = "android:id/action_bar_title";
 	private static final String LABEL_OPEN_FROM = "Open from";
 	private static final String LABEL_MY_DRIVE = "My Drive";
-	private static final String SEND_FILE = "random_seed_concat.bin";
+	private static final String SEND_FILE = "a_random_seed_concat.bin";
 
 	private static final int NB_FILES = 2;
 
