@@ -40,8 +40,8 @@ public class LaunchSettings extends UiAutomatorTestCase {
 					android.widget.RelativeLayout.class.getName(), 9, null,
 					ID_LIST_FILE, true);
 			if (oldFile != null && oldFile.exists()) {
-				// long press for the menu: longClick() doesn't work
-				Utils.longClick(oldFile);
+				// long press with text for the menu: longClick() doesn't work
+				Utils.longPress(Utils.getObjectWithText(fileName), 500);
 				// menu, find delete
 				Utils.getObjectWithText(LABEL_REMOVE)
 						.clickAndWaitForNewWindow();
@@ -62,7 +62,6 @@ public class LaunchSettings extends UiAutomatorTestCase {
 		// Upload button on the bottom
 		assertTrue("Upload button is not here",
 				Utils.clickAndWaitForNewWindow(ID_DRIV_UPLOAD));
-		sleep(1000);
 
 		// If we are on the left menu or not in Internal storage
 		UiObject action_title = Utils.getObjectWithId(ID_DRIV_TITLE);
