@@ -103,11 +103,19 @@ public class LaunchSettings extends UiAutomatorTestCase {
 			throws UiObjectNotFoundException {
 		int i = 0;
 		// We first have a dialogue: Preparing file
+		boolean stop = false;
 		for (; i < MAX_TIME; i++) {
 			UiObject msg = Utils.getObjectWithId(ID_TITLE_MSG);
-			if (msg == null || !msg.exists()
-					|| !msg.getText().equals(LABEL_MSG_PREPARING))
-				break;
+			try {
+				if (msg == null || !msg.exists()
+						|| !msg.getText().equals(LABEL_MSG_PREPARING))
+					break;
+			} catch (UiObjectNotFoundException e) {
+				// strange error: exists but not found when getting text
+				if (stop)
+					break;
+				stop = true;
+			}
 			sleep(1000);
 		}
 		if (i == MAX_TIME)
@@ -146,7 +154,7 @@ public class LaunchSettings extends UiAutomatorTestCase {
 
 			// upload file and wait
 			updateFile(SEND_FILE);
-			sleep(500); // new window + dialog
+			sleep(1000); // new window + dialog
 			assertTrue("Upload: timeout", waitForEndUpload(SEND_FILE));
 
 			// check if we have enough time for a new upload
