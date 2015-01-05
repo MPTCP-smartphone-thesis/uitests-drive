@@ -12,6 +12,7 @@ import com.android.uiautomator.testrunner.UiAutomatorTestCase;
 public class LaunchSettings extends UiAutomatorTestCase {
 
 	private static final String ID_LIST_FILE = "com.google.android.apps.docs:id/title";
+	private static final String ID_TITLE_ALERT = "android:id/alertTitle";
 	private static final String LABEL_REMOVE = "Remove";
 	private static final String ID_BUTTON_REMOVE = "com.google.android.apps.docs:id/btn_ok";
 
@@ -40,8 +41,14 @@ public class LaunchSettings extends UiAutomatorTestCase {
 					android.widget.RelativeLayout.class.getName(), 9, null,
 					ID_LIST_FILE, true);
 			if (oldFile != null && oldFile.exists()) {
-				// long press with text for the menu: longClick() doesn't work
-				Utils.longPress(Utils.getObjectWithText(fileName), 500);
+				// refresh can take some time...
+				for (int i = 0; i < 20; i++) {
+					// long press with text for the menu: longClick doesn't work
+					Utils.longPress(Utils.getObjectWithText(fileName), 500);
+					// when refreshing, longPress is disabled
+					if (Utils.hasText(ID_TITLE_ALERT, fileName))
+						break;
+				}
 				// menu, find delete
 				Utils.getObjectWithText(LABEL_REMOVE)
 						.clickAndWaitForNewWindow();
