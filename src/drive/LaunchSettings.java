@@ -146,6 +146,7 @@ public class LaunchSettings extends UiAutomatorTestCase {
 
 			// upload file and wait
 			updateFile(SEND_FILE);
+			sleep(500); // new window + dialog
 			assertTrue("Upload: timeout", waitForEndUpload(SEND_FILE));
 
 			// check if we have enough time for a new upload
