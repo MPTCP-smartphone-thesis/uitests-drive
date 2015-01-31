@@ -99,7 +99,7 @@ public class LaunchSettings extends UiAutomatorTestCase {
 		}
 	}
 
-	private boolean waitForEndUpload(String fileName)
+	private UiObject waitForEndUpload(String fileName)
 			throws UiObjectNotFoundException {
 		int i = 0;
 		// We first have a dialogue: Preparing file
@@ -118,8 +118,8 @@ public class LaunchSettings extends UiAutomatorTestCase {
 			}
 			sleep(1000);
 		}
-		if (i == MAX_TIME)
-			return false;
+		// error if timeout with the first dialogue
+		assertTrue("Timeout", i < MAX_TIME);
 
 		// wait: time to see the file in the list with Uploading status
 		i += 2;
@@ -134,10 +134,10 @@ public class LaunchSettings extends UiAutomatorTestCase {
 					.resourceId(ID_TITLE_STATUS));
 			if (status == null || !status.exists()
 					|| status.getText().isEmpty())
-				return true;
+				return null;
 			sleep(1000);
 		}
-		return false;
+		return uploadingFile;
 	}
 
 	public void testDemo() throws UiObjectNotFoundException {
@@ -159,7 +159,16 @@ public class LaunchSettings extends UiAutomatorTestCase {
 			// upload file and wait
 			updateFile(SEND_FILE);
 			sleep(1000); // new window + dialog
-			assertTrue("Upload: timeout", waitForEndUpload(SEND_FILE));
+			UiObject uploadingFile = waitForEndUpload(SEND_FILE);
+			if (uploadingFile != null) {
+				System.out.println("Timeout, cancel upload");
+				// to avoid uploading a file during other tests
+				removePreviousFiles(SEND_FILE);
+				// Error if no file uploaded
+				assertTrue("Not able to upload any file", i > 0);
+				// we had at least one file, it's ok.
+				break;
+			}
 
 			// check if we have enough time for a new upload
 			int elapsedTimeSec = (int) ((System.currentTimeMillis() - start) / 1000);
