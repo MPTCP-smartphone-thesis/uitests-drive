@@ -129,7 +129,7 @@ public class LaunchSettings extends UiAutomatorTestCase {
 		UiObject uploadingFile = Utils.findLayoutInList(fileName,
 				android.widget.RelativeLayout.class.getName(), 9, null,
 				ID_LIST_FILE, true);
-		for (; i < MAX_TIME + 30; i++) {
+		for (; i < MAX_TIME + 10; i++) {
 			UiObject status = uploadingFile.getChild(new UiSelector()
 					.resourceId(ID_TITLE_STATUS));
 			if (status == null || !status.exists()
