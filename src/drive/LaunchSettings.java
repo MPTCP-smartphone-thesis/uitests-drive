@@ -166,7 +166,7 @@ public class LaunchSettings extends UiAutomatorTestCase {
 				removePreviousFiles(SEND_FILE);
 				// Error if no file uploaded
 				//assertTrue("Not able to upload any file", i > 0);
-				System.err.println("WARNING: no enough time to upload a file")
+				System.err.println("WARNING: no enough time to upload a file");
 				// we had at least one file, it's ok.
 				break;
 			}
